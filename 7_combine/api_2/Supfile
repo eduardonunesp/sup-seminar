@@ -1,0 +1,56 @@
+# API 1
+---
+version: 0.3
+
+env:
+  IMAGE: node:6
+  NAME: api_2
+
+networks:
+  local:
+    hosts:
+      - localhost
+
+  dev:
+    hosts:
+      - docker@192.168.99.100
+
+commands:
+  prepare:
+    desc: Create necessary directories
+    run: mkdir -p /tmp/$IMAGE
+
+  upload_file:
+    desc: Upload docker image
+    upload:
+      - src: .
+        dst: /tmp/$IMAGE
+
+  build:
+    desc: Build docker image
+    run: cd /tmp/$IMAGE; docker build --no-cache -t $IMAGE .
+
+  run_container:
+    desc: Run the container
+    run: >
+      docker run -d \
+        --name $NAME $IMAGE
+
+  stop:
+    desc: Stop container
+    run: docker stop $NAME
+
+  clear:
+    desc: Clear container
+    run: docker rm -f $NAME
+
+targets:
+  deploy:
+    - prepare
+    - upload_file
+    - build
+    - run_container
+
+  undeploy:
+    - stop
+    - clear

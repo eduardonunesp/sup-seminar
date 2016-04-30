@@ -1,0 +1,39 @@
+# Supfile
+---
+version: 0.3
+
+# Global environment variables
+networks:
+  dev:
+    hosts:
+      - localhost
+
+commands:
+  api_deploy:
+    desc: Deploy API 1 and 2
+    run: |
+      cd ./api_1 && sup $SUP_NETWORK deploy
+      cd ../api_2 && sup $SUP_NETWORK deploy
+
+  balancer_deploy:
+    desc: Deploy load balancer
+    run: cd ./load_balancer && sup $SUP_NETWORK deploy
+
+  api_undeploy:
+    desc: Deploy API 1 and 2
+    run: |
+      cd ./api_1 && sup $SUP_NETWORK undeploy
+      cd ../api_2 && sup $SUP_NETWORK undeploy
+
+  balancer_undeploy:
+    desc: Deploy load balancer
+    run: cd ./load_balancer && sup $SUP_NETWORK undeploy
+
+targets:
+  deploy:
+    - api_deploy
+    - balancer_deploy
+
+  undeploy:
+    - api_undeploy
+    - balancer_undeploy

@@ -1,0 +1,30 @@
+# Docker container shell
+---
+version: 0.3
+
+env:
+  NAME: mynginx
+  IMAGE: nginx:latest
+
+networks:
+  remote:
+    hosts:
+      - docker@192.168.99.100
+
+commands:
+  create:
+    desc: Create a docker container for $IMAGE
+    run: docker run -d -p 8080:80 --name $NAME $IMAGE
+
+  shell:
+    desc: Interactive shell on all hosts
+    stdin: true
+    run: docker exec -i $NAME bash
+
+  health:
+    desc: Application health check
+    run: curl 192.168.99.100:8080
+
+  remove:
+    desc: Remove a docker container
+    run: docker rm -f $NAME

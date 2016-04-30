@@ -1,0 +1,34 @@
+# Hello World
+---
+version: 0.3
+
+env:
+  HEY: HEY
+  HOO: HOO
+  LETS: LETS
+  GO: GO
+  WHAT: $HEY $HOO $LETS $GO
+
+networks:
+  local:
+    hosts:
+      - localhost
+
+commands:
+  whatsuname:
+    desc: Show me the uname
+    run: uname -a
+
+  echo:
+    desc: A little hello
+    run: echo "Turn down for what ? $WHAT $PATH"
+
+  variables:
+    desc: Show SUP variables
+    run: echo "$SUP_NETWORK, $SUP_USER, $SUP_TIME, $SUP_HOST"
+
+targets:
+  info:
+    - whatsuname
+    - variables
+    - echo

@@ -1,0 +1,22 @@
+# Upload files
+---
+version: 0.3
+
+networks:
+  remote:
+    hosts:
+      - docker@192.168.99.100
+
+commands:
+  upload_file:
+    upload:
+      - src: files
+        dst: /tmp
+
+  check_file:
+    run: test -e /tmp/files/foobar.txt
+
+targets:
+  send:
+    - upload_file
+    - check_file

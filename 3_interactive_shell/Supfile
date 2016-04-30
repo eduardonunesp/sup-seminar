@@ -1,0 +1,22 @@
+# Interactive shell
+---
+version: 0.3
+
+env:
+  WHAT: Supfile Config
+
+networks:
+  local:
+    hosts:
+      - localhost
+
+  remote:
+    hosts:
+      - docker@192.168.99.100
+      - docker@192.168.99.101
+
+commands:
+  shell:
+    desc: Interactive shell on all hosts
+    stdin: true
+    run: /bin/sh

@@ -1,0 +1,29 @@
+# Hello World Plus Remote
+---
+version: 0.3
+
+env:
+  WHAT: Supfile Config
+
+networks:
+  local:
+    hosts:
+      - localhost
+
+  remote:
+    hosts:
+      - docker@192.168.99.100
+
+commands:
+  whatsuname:
+    desc: Show me the uname
+    run: uname -a
+
+  echo:
+    desc: A little hello
+    run: echo "Turn down for what ? $WHAT"
+
+targets:
+  info:
+    - whatsuname
+    - echo
